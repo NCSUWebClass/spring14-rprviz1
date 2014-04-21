@@ -34,6 +34,11 @@
     pointer-events: all;
     cursor: ew-resize;
   }
+  
+  #filters > a {
+	  background-color:#3179B1;
+	  padding:5px;
+  }
 </style>
 
 
@@ -41,6 +46,15 @@
 <h1>Wake County Free and Reduced Lunch</h1>
 
 <p id="chart"></p>
+
+<div id="filters">
+<a id="all" class="active">All</a>
+<a id="elementary">Elementary</a>
+<a id="middle">Middle</a>
+<a id="high">High</a>
+<a id="other">Other</a>
+</div>
+<br>
 
 <aside>Mouseover the year to move forward and backwards through time.</aside>
 
@@ -86,7 +100,7 @@
   // Various scales. These domains make assumptions of data, naturally.
   var xScale = d3.scale.linear().domain([1, 100]).range([0, width]),
     yScale = d3.scale.linear().domain([1, 100]).range([height, 0]),
-    radiusScale = d3.scale.sqrt().domain([0, 9e8]).range([0, 20000]),
+    radiusScale = d3.scale.sqrt().domain([0, 9e8]).range([0, 10000]),
     colorScale = d3.scale.category10();
 
   // The x & y axes.
@@ -136,6 +150,8 @@
     .attr("x", width)
     .text(2011);
 
+  
+  
   // Load the data.
   d3.json("schools.json", function(nations) {
 
@@ -269,6 +285,25 @@
     }
   });
 </script>
+<!-- JavaScript at the bottom for fast page loading -->
+
+  <!-- Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if offline -->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+  <script>window.jQuery || document.write('<script src="js/libs/jquery-1.6.2.min.js"><\/script>')</script>
+
+  <script src="js/vis.min.js"></script>
+
+  <script type="text/javascript">
+    $(document).ready(function() {
+        $('#filters a').click(function() {
+          $('#filters a').removeClass("active");
+          var typeId = $(this).attr("id");
+          $(this).addClass("active");
+          move_groups(typeId);
+          });
+	});	
+	</script>
+    
 <script>
   GoogleAnalyticsObject = "ga", ga = function() {
     ga.q.push(arguments);
