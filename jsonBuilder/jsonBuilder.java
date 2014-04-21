@@ -6,11 +6,11 @@ public class jsonBuilder {
     public static void main(String[] args) throws FileNotFoundException,NoSuchElementException {
         Scanner console = new Scanner(System.in);
         
-        //System.out.print("Enter input filename: ");
-        //Scanner input = new Scanner(new File(console.next()));
+        System.out.print("Enter input filename: ");
+        Scanner input = new Scanner(new File(console.next()));
         
         //input file
-        Scanner input = new Scanner(new File("F&R2011-2012.txt"));
+        //Scanner input = new Scanner(new File("F&R2011-2012.txt"));
         
         //create output file
         File fout = new File("output.txt");
