@@ -8,7 +8,7 @@
     height: 506px;
   }
   text {
-    font: 10px sans-serif;
+    font: 12px sans-serif;
   }
   .dot {
     stroke: #000;
@@ -36,8 +36,28 @@
   }
   
   #filters > a {
-	  background-color:#3179B1;
+	  border:1px solid gray;
 	  padding:5px;
+  }
+  
+  #all {
+	  background-color:white;
+  }
+  
+  #elementary {
+	  background-color:#3179B1;
+  }
+  
+  #middle {
+	  background-color:#F28834;
+  }
+  
+  #high {
+	  background-color:#52972E;
+  }
+  
+  #other {
+	  background-color:#C74538;
   }
 </style>
 
@@ -46,13 +66,23 @@
 <h1>Wake County Free and Reduced Lunch</h1>
 
 <p id="chart"></p>
-
-<div id="filters">
+<div id="right_section" class="control">
+      
+      <div id="key_container" style="display: none;">
+        <div id="key">
+        </div>
+      </div>
+    </div>
+    
+<div id="modifiers">
+ <div id="filters">
 <a id="all" class="active">All</a>
 <a id="elementary">Elementary</a>
 <a id="middle">Middle</a>
 <a id="high">High</a>
 <a id="other">Other</a>
+</div>
+
 </div>
 <br>
 
@@ -148,7 +178,7 @@
     .attr("text-anchor", "end")
     .attr("y", height - 24)
     .attr("x", width)
-    .text(2011);
+    .text(2008);
 
   
   
@@ -164,7 +194,7 @@
     var dot = svg.append("g")
       .attr("class", "dots")
       .selectAll(".dot")
-      .data(interpolateData(2011))
+      .data(interpolateData(2008))
       .enter().append("circle")
       .attr("class", "dot")
       .style("fill", function(d) {
@@ -218,7 +248,7 @@
     // After the transition finishes, you can mouseover to change the year.
     function enableInteraction() {
       var yearScale = d3.scale.linear()
-        .domain([2011, 2012])
+        .domain([2008, 2012])
         .range([box.x + 10, box.x + box.width - 10])
         .clamp(true);
 
@@ -247,7 +277,7 @@
     // Tweens the entire chart by first tweening the year, and then the data.
     // For the interpolated data, the dots and label are redrawn.
     function tweenYear() {
-      var year = d3.interpolateNumber(2011, 2012);
+      var year = d3.interpolateNumber(2008, 2012);
       return function(t) {
         displayYear(year(t));
       };
@@ -287,13 +317,13 @@
 </script>
 <!-- JavaScript at the bottom for fast page loading -->
 
-  <!-- Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if offline -->
+  <!-- Grab Google CDN's jQuery, with a protocol relative URL;  -->
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
-  <script>window.jQuery || document.write('<script src="js/libs/jquery-1.6.2.min.js"><\/script>')</script>
+ 
 
   <script src="js/vis.min.js"></script>
 
-  <script type="text/javascript">
+ <script type="text/javascript">
     $(document).ready(function() {
         $('#filters a').click(function() {
           $('#filters a').removeClass("active");
@@ -301,8 +331,33 @@
           $(this).addClass("active");
           move_groups(typeId);
           });
-	});	
-	</script>
+        $('#colors a').click(function() {
+          $('#colors a').removeClass("active");
+          var typeId = $(this).attr("id");
+          $(this).addClass("active");
+          color_nodes(typeId);
+          });
+        $('#showing a').click(function() {
+          $('#showing a').removeClass("active");
+          var typeId = $(this).attr("id");
+          $(this).addClass("active");
+          show_groups(typeId);
+          });
+        $("#search").keyup(function() {
+          var search_term = $(this).val()
+          find_nodes(search_term);
+          });
+        $("#key_button").click(function() {
+            if ( $("#key_container").is(":hidden") ) {
+            $("#key_container").slideDown("normal");
+            $("#key_button").addClass("active");
+            } else {
+            $("#key_container").slideUp("normal");
+            $("#key_button").removeClass("active");
+            }
+          });
+        });
+      </script>
     
 <script>
   GoogleAnalyticsObject = "ga", ga = function() {
