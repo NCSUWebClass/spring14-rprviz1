@@ -35,9 +35,12 @@
     cursor: ew-resize;
   }
   
-  #filters > a {
+  #filters > button {
 	  border:1px solid gray;
 	  padding:5px;
+	  text-decoration:none;
+	  color:black;
+	  border-radius:7px;
   }
   
   #all {
@@ -66,21 +69,16 @@
 <h1>Wake County Free and Reduced Lunch</h1>
 
 <p id="chart"></p>
-<div id="right_section" class="control">
-      
-      <div id="key_container" style="display: none;">
-        <div id="key">
-        </div>
-      </div>
-    </div>
+
     
 <div id="modifiers">
  <div id="filters">
-<a id="all" class="active">All</a>
-<a id="elementary">Elementary</a>
-<a id="middle">Middle</a>
-<a id="high">High</a>
-<a id="other">Other</a>
+Sort By: 
+  <button id="all" onClick="updateDataA()">All</button>
+  <button id="elementary" onClick="updateDataE()">Elementary</button>
+  <button id="middle" onClick="updateDataM()">Middle</button>
+  <button id="high" onClick="updateDataH()">High</button>
+  <button id="other" onClick="updateDataO()">Other</button>
 </div>
 
 </div>
@@ -100,6 +98,7 @@
 
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script>
+	var dot;
   // Various accessors that specify the four dimensions of data to visualize.
   function x(d) {
     return d.fr;
@@ -180,18 +179,41 @@
     .attr("x", width)
     .text(2008);
 
-  
-  
-  // Load the data.
-  d3.json("schools.json", function(nations) {
-
+  var str = "schools.json";
+  draw();
+  function updateDataA() {
+	  str = "schools.json";
+	  draw();
+  }
+  function updateDataE() {
+	  str = "elem.json";
+	  draw();
+  }
+  function updateDataM() {
+	  str = "middle.json";
+	  draw();
+  }
+  function updateDataH() {
+	  str = "high.json";
+	  draw();
+  }
+  function updateDataO() {
+	  str = "other.json";
+	  draw();
+  }
+	  
+	// Load the data.
+  function draw() {
+  d3.json(str, function(nations) {
+	svg.selectAll(".dot").remove();
     // A bisector since many nation's data is sparsely-defined.
     var bisect = d3.bisector(function(d) {
       return d[0];
     });
-
-    // Add a dot per nation. Initialize the data at 1800, and set the colors.
-    var dot = svg.append("g")
+	
+	
+    // Add a dot per nation. Initialize the data at 2008, and set the colors.
+    dot = svg.append("g")
       .attr("class", "dots")
       .selectAll(".dot")
       .data(interpolateData(2008))
@@ -206,7 +228,7 @@
     // Add a title.
     dot.append("title")
       .text(function(d) {
-        return d.name;
+        return d.name + "\npopulation: " + d.population;
       });
 
     // Add an overlay for the year label.
@@ -314,6 +336,9 @@
       return a[1];
     }
   });
+}
+  
+	  
 </script>
 <!-- JavaScript at the bottom for fast page loading -->
 
@@ -323,42 +348,6 @@
 
   <script src="js/vis.min.js"></script>
 
- <script type="text/javascript">
-    $(document).ready(function() {
-        $('#filters a').click(function() {
-          $('#filters a').removeClass("active");
-          var typeId = $(this).attr("id");
-          $(this).addClass("active");
-          move_groups(typeId);
-          });
-        $('#colors a').click(function() {
-          $('#colors a').removeClass("active");
-          var typeId = $(this).attr("id");
-          $(this).addClass("active");
-          color_nodes(typeId);
-          });
-        $('#showing a').click(function() {
-          $('#showing a').removeClass("active");
-          var typeId = $(this).attr("id");
-          $(this).addClass("active");
-          show_groups(typeId);
-          });
-        $("#search").keyup(function() {
-          var search_term = $(this).val()
-          find_nodes(search_term);
-          });
-        $("#key_button").click(function() {
-            if ( $("#key_container").is(":hidden") ) {
-            $("#key_container").slideDown("normal");
-            $("#key_button").addClass("active");
-            } else {
-            $("#key_container").slideUp("normal");
-            $("#key_button").removeClass("active");
-            }
-          });
-        });
-      </script>
-    
 <script>
   GoogleAnalyticsObject = "ga", ga = function() {
     ga.q.push(arguments);
