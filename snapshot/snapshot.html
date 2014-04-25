@@ -3,44 +3,117 @@
 <style>
 
 body {
-  font: 22px sans-serif;
+  font: 14px sans-serif;
 }
 
 .arc path {
   stroke: #fff;
 }
 
+#charts {
+	float:left; 
+	margin-top:35px; 
+	border:1px solid #999;
+}
+
+.item {
+	width:40px;
+	font-size:10px; 
+	float:left;
+}
+
+.itemBox {
+	 width:15px; 
+	 height:15px; 
+	 margin-bottom:2px;
+}
+
 </style>
 <body>
 <h2>2012 School District Snapshot</h2>
+
+<div id="radiobuttons" style="float:left; width:50%">
 <form>
-  <label><input type="radio" name="dataset" value="WesternWake" checked> Western Wake</label><br>
-  <label><input type="radio" name="dataset" value="SouthernWake"> Southern Wake</label><br>
-  <label><input type="radio" name="dataset" value="SoutheastWake"> Southeast Wake</label><br>
-  <label><input type="radio" name="dataset" value="NorthRaleigh"> North Raleigh</label><br>
-  <label><input type="radio" name="dataset" value="CentralRaleigh"> Central Raleigh</label><br>
-  <label><input type="radio" name="dataset" value="WestRaleighMorrisville"> WestRaleigh/Morrisville</label><br>
-  <label><input type="radio" name="dataset" value="EastRaleigh"> East Raleigh</label><br>
-  <label><input type="radio" name="dataset" value="NortheastWake"> Northeast Wake</label><br>
+  <label><input type="radio" name="dataset" value="WesternWake"  onClick="reportValue(this)" checked> Western Wake</label><br>
+  <label><input type="radio" name="dataset" value="SouthernWake"  onClick="reportValue(this)"> Southern Wake</label><br>
+  <label><input type="radio" name="dataset" value="SoutheastWake"  onClick="reportValue(this)"> Southeast Wake</label><br>
+  <label><input type="radio" name="dataset" value="NorthRaleigh"  onClick="reportValue(this)"> North Raleigh</label><br>
+  <label><input type="radio" name="dataset" value="CentralRaleigh"  onClick="reportValue(this)"> Central Raleigh</label><br>
+  <label><input type="radio" name="dataset" value="WestRaleighMorrisville"  onClick="reportValue(this)"> WestRaleigh/Morrisville</label><br>
+  <label><input type="radio" name="dataset" value="EastRaleigh"  onClick="reportValue(this)"> East Raleigh</label><br>
+  <label><input type="radio" name="dataset" value="NortheastWake"  onClick="reportValue(this)"> Northeast Wake</label><br>
 </form>
-<p>Legend</p>
+</div>
+
+
+<div id="charts"> <!-- charts -->
+<div id="schoolName"><center><h3 id="result"></h3></center>
+	<script>
+            function reportValue(element){
+                var result_Element = document.getElementById("result");
+                
+                if (element.value == "SouthernWake"){
+                    result_Element.innerHTML = "Southern Wake";
+                } else if (element.value == "WesternWake"){
+                    result_Element.innerHTML = "Western Wake";
+                } else if (element.value == "SoutheastWake"){
+                    result_Element.innerHTML = "Southeast Wake";
+                } else if (element.value == "NorthRaleigh"){
+                    result_Element.innerHTML = "North Raleigh";
+                } else if (element.value == "CentralRaleigh"){
+                    result_Element.innerHTML = "Central Raleigh";
+                } else if (element.value == "WestRaleighMorrisville"){
+                    result_Element.innerHTML = "West Raleigh/Morrisville";
+                } else if (element.value == "EastRaleigh"){
+                    result_Element.innerHTML = "East Raleigh";
+                } else if (element.value == "NortheastWake"){
+                    result_Element.innerHTML = "Northeast Wake";
+                }
+            }
+        </script>
+</div>
+
+
+<div style="float:left; width:32%">
+<div style="height:100px; padding-left:150px;"><p>Legend</p>
 <div style="width:40px;font-size:10px; float:left ">
-	<div style="background-color:#ff8c00; width:15px; height:15px; margin-bottom:2px"></div>American Indian</div>
+	<div class="itemBox" style="background-color:#ff8c00;"></div>Male</div>
 <div style="width:40px;font-size:10px; float:left ">
-	<div style="background-color:#DC3912; width:15px; height:15px;font-size:10px; margin-bottom:2px"></div>Asian</div>
+	<div class="itemBox" style="background-color:#DC3912;"></div>Female</div>
+</div><!--end legend -->
+<div id="gender" style="float:left"></div>
+</div>
+   
+<div id="diversity" style="float:left; width:32%">
+<div style="height:100px; padding-left:10px;"><p><center>Legend</center></p>
+<div class="item">
+	<div class="itemBox" style="background-color:#ff8c00;"></div>American Indian</div>
+<div class="item">
+	<div class="itemBox" style="background-color:#DC3912;"></div>Asian</div>
+<div class="item">
+	<div class="itemBox" style="background-color:#3366CC;"></div>Black</div>
+<div class="item">
+	<div class="itemBox" style="background-color:#109618;"></div>Hispanic</div>
+<div class="item">
+	<div class="itemBox" style="background-color:#990099;"></div>Pacific Islander</div>
+<div class="item">
+	<div class="itemBox" style="background-color:#d0743c;"></div>Two or More Races</div>
+<div class="item">
+	<div class="itemBox" style="background-color:#00bfff;"></div>White</div>
+</div><!--end legend -->
+</div>
+
+
+<div id="fr" style="float:left; width:32%">
+<div style="height:100px; padding-left:150px;"><p>Legend</p>
 <div style="width:40px;font-size:10px; float:left ">
-	<div style="background-color:#3366CC; width:15px; height:15px;font-size:10px; margin-bottom:2px"></div>Black</div>
+	<div class="itemBox" style="background-color:#ff8c00;"></div>Free & Reduced Lunch</div>
 <div style="width:40px;font-size:10px; float:left ">
-	<div style="background-color:#109618; width:15px; height:15px;font-size:10px; margin-bottom:2px"></div>Hispanic</div>
-    <div style="width:40px;font-size:10px; float:left ">
-	<div style="background-color:#990099; width:15px; height:15px;font-size:10px; margin-bottom:2px"></div>Pacific Islander</div>
-    <div style="width:40px;font-size:10px; float:left ">
-	<div style="background-color:#d0743c; width:15px; height:15px;font-size:10px; margin-bottom:2px"></div>Two or More Races</div>
-    <div style="width:40px;font-size:10px; float:left ">
-	<div style="background-color:#00bfff; width:15px; height:15px;font-size:10px; margin-bottom:2px"></div>White</div>
-    
-    
-<div id="diversity">Diversity</div>
+	<div class="itemBox" style="background-color:#DC3912;"></div>Regular Price</div>
+</div><!--end legend --></div>
+
+
+</div><!-- end charts -->
 
 
 <script src="http://d3js.org/d3.v3.min.js"></script>
@@ -61,12 +134,29 @@ var pie = d3.layout.pie()
 var arc = d3.svg.arc()
     .innerRadius(radius - 100)
     .outerRadius(radius - 20);
+	
+var arcOver = d3.svg.arc()
+	.innerRadius(radius - 100)
+    .outerRadius(radius);
 
 var chart1 = d3.select("#diversity").append("svg")
     .attr("width", width)
     .attr("height", height)
   .append("g")
     .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+	
+var chart2 = d3.select("#gender").append("svg")
+    .attr("width", width)
+    .attr("height", height)
+  .append("g")
+    .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")"); 
+	
+var chart3 = d3.select("#fr").append("svg")
+    .attr("width", width)
+    .attr("height", height)
+  .append("g")
+    .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")"); 
+
 
 d3.tsv("snapshotdiversity.tsv", type, function(error, data) {
   var path = chart1.datum(data).selectAll("path")
@@ -74,10 +164,85 @@ d3.tsv("snapshotdiversity.tsv", type, function(error, data) {
     .enter().append("path")
       .attr("fill", function(d, i) { return color(i); })
       .attr("d", arc)
-      .each(function(d) { this._current = d; }); // store the initial angles
-
-
-  d3.selectAll("input")
+      .each(function(d) { this._current = d; })
+	   
+			
+	  .on("mouseover", function(d) {
+		            	d3.select(this).transition()
+			               .duration(1000)
+			               .attr("d", arcOver);
+		             })
+				.on("mouseout", function(d) {
+		            	d3.select(this).transition()
+			               .duration(1000)
+			               .attr("d", arc);
+				});
+	
+	  
+	  d3.tsv("2012genderdistrict.tsv", type, function(error, data) {
+	  
+		var path2 = chart2.datum(data).selectAll("path")
+			.data(pie)
+		  .enter().append("path")
+			.attr("fill", function(d, i) { return color(i); })
+			.attr("d", arc)
+			.each(function(d) { this._current = d; })
+			.on("mouseover", function(d) {
+		            	d3.select(this).transition()
+			               .duration(1000)
+			               .attr("d", arcOver);
+						   
+						   
+						   
+		             })
+				.on("mouseout", function(d) {
+		            	d3.select(this).transition()
+			               .duration(1000)
+			               .attr("d", arc);
+				});
+				
+				  d3.tsv("2012needydistrict.tsv", type, function(error, data) {
+	  
+		var path3 = chart3.datum(data).selectAll("path")
+			.data(pie)
+		  .enter().append("path")
+			.attr("fill", function(d, i) { return color(i); })
+			.attr("d", arc)
+			.each(function(d) { this._current = d; })
+			.on("mouseover", function(d) {
+		            	d3.select(this).transition()
+			               .duration(1000)
+			               .attr("d", arcOver);   
+		             })
+				.on("mouseout", function(d) {
+		            	d3.select(this).transition()
+			               .duration(1000)
+			               .attr("d", arc);
+				});
+	
+	chart1.append("svg:text")                                     
+                .attr("transform", function(d) {                    
+                return "translate(" + arc.centroid(d) + ")";        
+            })
+            .attr("text-anchor", "middle")                          
+            .text("Diversity");
+			
+	chart2.append("svg:text")                                     
+                .attr("transform", function(d) {                    
+                return "translate(" + arc.centroid(d) + ")";        
+            })
+            .attr("text-anchor", "middle")                          
+            .text("Gender");
+			
+	chart3.append("svg:text")                                     
+                .attr("transform", function(d) {                    
+                return "translate(" + arc.centroid(d) + ")";        
+            })
+            .attr("text-anchor", "middle")                          
+            .text("F&R");
+	
+			
+			d3.selectAll("input")
       .on("change", change);
 
   var timeout = setTimeout(function() {
@@ -88,10 +253,27 @@ d3.tsv("snapshotdiversity.tsv", type, function(error, data) {
     var value = this.value;
     clearTimeout(timeout);
     pie.value(function(d) { return d[value]; }); // change the value function
+	//Chart1 - diversity
     path = path.data(pie); // compute the new angles
     path.transition().duration(750).attrTween("d", arcTween); // redraw the arcs
+	//Chart2 - gender
+	path2 = path2.data(pie); // compute the new angles
+    path2.transition().duration(750).attrTween("d", arcTween); // redraw the arcs
+	//Chart3 - F&R
+	path3 = path3.data(pie); // compute the new angles
+    path3.transition().duration(750).attrTween("d", arcTween); // redraw the arcs
+	
   }
-});
+  
+  
+	  }); <!-- end fr -->
+	
+  
+	  }); <!-- end gender -->
+	
+  }); <!-- end diversity -->
+
+
 
 function type(d) {
   d.WesternWake = +d.WesternWake;
