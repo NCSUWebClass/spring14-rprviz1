@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+body {
+  font: 22px sans-serif;
+}
+
+.arc path {
+  stroke: #fff;
+}
+
+</style>
+<body>
+<h2>2012 School District Snapshot</h2>
+<form>
+  <label><input type="radio" name="dataset" value="WesternWake" checked> Western Wake</label><br>
+  <label><input type="radio" name="dataset" value="SouthernWake"> Southern Wake</label><br>
+  <label><input type="radio" name="dataset" value="SoutheastWake"> Southeast Wake</label><br>
+  <label><input type="radio" name="dataset" value="NorthRaleigh"> North Raleigh</label><br>
+  <label><input type="radio" name="dataset" value="CentralRaleigh"> Central Raleigh</label><br>
+  <label><input type="radio" name="dataset" value="WestRaleighMorrisville"> WestRaleigh/Morrisville</label><br>
+  <label><input type="radio" name="dataset" value="EastRaleigh"> East Raleigh</label><br>
+  <label><input type="radio" name="dataset" value="NortheastWake"> Northeast Wake</label><br>
+</form>
+<p>Legend</p>
+<div style="width:40px;font-size:10px; float:left ">
+	<div style="background-color:#ff8c00; width:15px; height:15px; margin-bottom:2px"></div>American Indian</div>
+<div style="width:40px;font-size:10px; float:left ">
+	<div style="background-color:#DC3912; width:15px; height:15px;font-size:10px; margin-bottom:2px"></div>Asian</div>
+<div style="width:40px;font-size:10px; float:left ">
+	<div style="background-color:#3366CC; width:15px; height:15px;font-size:10px; margin-bottom:2px"></div>Black</div>
+<div style="width:40px;font-size:10px; float:left ">
+	<div style="background-color:#109618; width:15px; height:15px;font-size:10px; margin-bottom:2px"></div>Hispanic</div>
+    <div style="width:40px;font-size:10px; float:left ">
+	<div style="background-color:#990099; width:15px; height:15px;font-size:10px; margin-bottom:2px"></div>Pacific Islander</div>
+    <div style="width:40px;font-size:10px; float:left ">
+	<div style="background-color:#d0743c; width:15px; height:15px;font-size:10px; margin-bottom:2px"></div>Two or More Races</div>
+    <div style="width:40px;font-size:10px; float:left ">
+	<div style="background-color:#00bfff; width:15px; height:15px;font-size:10px; margin-bottom:2px"></div>White</div>
+    
+    
+<div id="diversity">Diversity</div>
+
+
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script>
+
+
+var width = 360,
+    height = 320,
+    radius = Math.min(width, height) / 2;
+
+var color = d3.scale.ordinal()
+    .range(["#ff8c00", "#DC3912", "#3366CC", "#109618", "#990099", "#d0743c", "#00bfff","ffff00"]);
+
+var pie = d3.layout.pie()
+    .value(function(d) { return d.WesternWake; })
+    .sort(null);
+
+var arc = d3.svg.arc()
+    .innerRadius(radius - 100)
+    .outerRadius(radius - 20);
+
+var chart1 = d3.select("#diversity").append("svg")
+    .attr("width", width)
+    .attr("height", height)
+  .append("g")
+    .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+d3.tsv("snapshotdiversity.tsv", type, function(error, data) {
+  var path = chart1.datum(data).selectAll("path")
+      .data(pie)
+    .enter().append("path")
+      .attr("fill", function(d, i) { return color(i); })
+      .attr("d", arc)
+      .each(function(d) { this._current = d; }); // store the initial angles
+
+
+  d3.selectAll("input")
+      .on("change", change);
+
+  var timeout = setTimeout(function() {
+    d3.select("input[value=\"WesternWake\"]").property("checked", true).each(change);
+  }, 2000);
+
+  function change() {
+    var value = this.value;
+    clearTimeout(timeout);
+    pie.value(function(d) { return d[value]; }); // change the value function
+    path = path.data(pie); // compute the new angles
+    path.transition().duration(750).attrTween("d", arcTween); // redraw the arcs
+  }
+});
+
+function type(d) {
+  d.WesternWake = +d.WesternWake;
+  d.SouthernWake = +d.SouthernWake;
+  d.SoutheastWake = +d.SoutheastWake;
+  d.NorthRaleigh = +d.NorthRaleigh;
+  d.CentralRaleigh = +d.CentralRaleigh;
+  d.WestRaleighMorrisville = +d.WestRaleighMorrisville;
+  d.EastRaleigh = +d.EastRaleigh;
+  d.NortheastWake = +d.NortheastWake;
+  return d;
+  
+}
+
+
+// Store the displayed angles in _current.
+// Then, interpolate from _current to the new angles.
+// During the transition, _current is updated in-place by d3.interpolate.
+function arcTween(a) {
+  var i = d3.interpolate(this._current, a);
+  this._current = i(0);
+  return function(t) {
+    return arc(i(t));
+  };
+}
+
+
+
+
+</script>
+
+
+
+<!-- JavaScript at the bottom for fast page loading -->
+
+  <!-- Grab Google CDN's jQuery, with a protocol relative URL;  -->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+ 
+
+  <script src="js/vis.min.js"></script>
+
+<script>
+  GoogleAnalyticsObject = "ga", ga = function() {
+    ga.q.push(arguments);
+  }, ga.q = [], ga.l = +new Date;
+  ga("create", "UA-48272912-3", "ocks.org");
+  ga("send", "pageview");
+</script>
+<script async src="//www.google-analytics.com/analytics.js"></script>

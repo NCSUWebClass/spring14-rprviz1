@@ -1,0 +1,90 @@
+
+
+#chart-container {
+	width: 600px; 
+	background: rgba(255,255,255,0.5);
+}
+
+#chart-container h2 {
+	color: #444;
+	margin: 0 0 10px;
+	font-weight: 300;
+	padding: 10px;
+	text-shadow: 0 1px 1px rgba(255,255,255,0.8);
+	font-size: 24px;
+}
+
+svg {
+	font-family: 'Lato', Arial, serif;
+	font-size: 14px;
+	font-weight: 400;
+}
+
+text.country-title {
+	font-size: 20px;
+}
+
+text.instructions {
+	font-size: 16px;
+}
+
+g.context g.brush rect.background {
+	fill: rgba(0,0,0,.1);
+}
+
+g.context g.axis path {
+	stroke-opacity: 0;
+}
+
+g.context g.axis line {
+	stroke-opacity: .1;
+}
+
+g.western_wake path.chart {
+	fill: rgba(255,140,0,1);
+}
+
+g.southern_wake path.chart {
+	fill: rgba(220,57,18,1);
+}
+
+g.southeast_wake path.chart {
+	fill: rgba(51,102,204,1);
+}
+
+g.north_raleigh path.chart {
+	fill: rgba(16,150,24,1);
+}
+
+g.central_raleigh path.chart {
+	fill: rgba(153,0,153,1);
+}
+
+g.east_raleigh path.chart {
+	fill: rgba(208,116,60,1);
+}
+
+g.northeast_wake path.chart {
+	fill: rgba(128,128,128,1);
+}
+
+g.west_raleigh_morrisville path.chart {
+	fill: rgba(242,255,0,1);
+}
+
+.axis path, .axis line {
+	fill: none;
+	stroke: #aaa;
+	shape-rendering: crispEdges;
+}
+
+.brush .extent {
+	stroke: #f09f8c;
+	fill-opacity: .125;
+	shape-rendering: crispEdges;
+}
+
+g.context rect.background{
+	fill: rgb(200,200,255);
+	visibility: visible !important;
+}​
