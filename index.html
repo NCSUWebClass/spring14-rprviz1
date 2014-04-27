@@ -2,10 +2,10 @@
 <html>
 	<head>
 		<style type="text/css">		
-		<!-- @import url('style.css'); -->
+			@import url('../style.css');
 		</style>
 		<meta charset="utf-8">
-		<title>NCSU & RPR Visualization</title>
+		<title>NCSU & RPR Data Visualization</title>
 	</head>
 	<body>
 		<nav role="navigation">
@@ -30,14 +30,14 @@
 			<br/>
 			<p>In this instance, the Record requested that the volunteers from NCSU scrape and create visualizations of public data from the <a href="http://www.wcpss.net/about-us/our-students/demographics/reports.html">Wake County Public School System website</a> as well as from the North Carolina State Board of Education's <a href="http://www.dpi.state.nc.us/data/reports/">Department of Public Instruction's website</a>. The data available from those two websites is all in Portable Document Format (PDF) and Microsoft's proprietary Excel Binary File Format (.XLS), which are not optimal formats for creating online visualizations. In response to this roadblock the team from NCSU converted the data from PDF and XLS formats into JavaScript Object Notation, an open standard that is much better suited to this project.</p>
 			<br/>
-			<p>
-				Finally, the team created several visualizations examining the relationships between:
+			<div id="relationlist">
+				<p>Finally, the team created several visualizations examining the relationships between:</p>
 				<ul>
 					<li>a school's minority population and its needy percentage (the percentage of students at the school who are enrolled in the free and reduced lunch program)</li>
 					<li>the needy percentage of an individual school and the passage of time</li>
 					<li>individual school districts and their demographic information</li>
 				</ul>
-			</p>
+			</div>
 			<br/>
 			<p>On this website you can view and interact with the visualizations created for this project. You can also download the converter source code used to convert the data from its original state into JSON format. Links to the JSON formatted data are provided as well.</p>
 		</div>
