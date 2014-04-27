@@ -519,17 +519,6 @@
   {
     "Agreement Number":920,
     "Sponsor Name":"Wake County Schools",
-    "Site Number":411,
-    "Site Name":"East Wake High",
-    "ADM":0,
-    "Reduced Applications":122,
-    "Free Applications":742,
-    "Needy %":"0.00%",
-    "Grade Level":"09 12"
-  },
-  {
-    "Agreement Number":920,
-    "Sponsor Name":"Wake County Schools",
     "Site Number":412,
     "Site Name":"William G Enloe High",
     "ADM":2538,
@@ -1780,17 +1769,6 @@
     "Free Applications":337,
     "Needy %":"66.09%",
     "Grade Level":"06 08"
-  },
-  {
-    "Agreement Number":920,
-    "Sponsor Name":"Wake County Schools",
-    "Site Number":700,
-    "Site Name":" EAST WAKE SCHOOL OF  ",
-    "ADM":370,
-    "Reduced Applications":0,
-    "Free Applications":0,
-    "Needy %":"0.00%",
-    "Grade Level":"09 12"
   },
   {
     "Agreement Number":920,
