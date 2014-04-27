@@ -1,10 +1,12 @@
 <!DOCTYPE html>
+<html>
+<head>
 <meta charset="utf-8">
-<style>
+<style type="text/css">
+		<!--
+		@import url('../style.css');
+		-->
 
-body {
-  font: 10px sans-serif;
-}
 
 .axis path,
 .axis line {
@@ -27,7 +29,23 @@ body {
 }
 
 </style>
-<body>
+</head>
+<body><nav role="navigation">
+<ul class="nav">
+   <li><a href="../index.html">About</a></li>
+  <li><a href="../data.html">Data</a></li>  
+  <li style="background-color:red"><a href="../visuals.html">Graph</a>
+    <ul>
+      <li><a href="../visual1/schools.html">Minoirty Population and Free and Reduced Lunch Percentage Over Time</a></li>
+      <li><a href="../snapshot/snapshot.html">Snapshot of a School District</a></li>
+	  <li><a href="index.html">Needy Percentage Over Time by School</a></li>
+	  <li><a href="../school-line/index.html">Needy Percentage Over Time by Diversity</a></li>
+    </ul>
+  </li>
+  <li><a href="./jsonBuilder/jsonBuilder.java">Convert</a></li>
+</ul>
+</nav>
+<div class="content">
 <h2 style="font-family: Tahoma">Wake County Lunch Data Needy Percentages</h3>
 <button value="2012-13" onclick="redraw(this)">2012-2013</button>
 <button value="2011-12" onclick="redraw(this)">2011-2012</button>
@@ -41,7 +59,7 @@ body {
 <script>
 var datalocation = "../json/";
 
-var margin = {top: 20, right: 100, bottom: 100, left: 40},
+var margin = {top: 20, right: 100, bottom: 100, left: 50},
     width = 1650 - margin.left - margin.right,
     height = 650 - margin.top - margin.bottom;
 
@@ -63,7 +81,7 @@ var yAxis = d3.svg.axis()
     .orient("left")
     .tickFormat(d3.format(".0%"));
 
-var svg = d3.select("body").append("svg")
+var svg = d3.select("div.content").append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
 	.append("g")
@@ -157,3 +175,6 @@ var render = function(filename) {
 
 render(datalocation + "2012-13freereduced.json");
 </script>
+</div>
+</body>
+</html>

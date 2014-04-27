@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
-<style>
+<style type="text/css">
+		<!--
+		@import url('../style.css');
+		-->
 
 body {
   font: 14px sans-serif;
@@ -30,6 +33,22 @@ body {
 
 </style>
 <body>
+<nav role="navigation">
+<ul class="nav">
+   <li><a href="../index.html">About</a></li>
+  <li><a href="../data.html">Data</a></li>  
+  <li style="background-color:red"><a href="../visuals.html">Graph</a>
+    <ul>
+      <li><a href="../visual1/schools.html">Minoirty Population and Free and Reduced Lunch Percentage Over Time</a></li>
+      <li><a href="../snapshot/snapshot.html">Snapshot of a School District</a></li>
+	  <li><a href="index.html">Needy Percentage Over Time by School</a></li>
+	  <li><a href="../school-line/index.html">Needy Percentage Over Time by Diversity</a></li>
+    </ul>
+  </li>
+  <li><a href="./jsonBuilder/jsonBuilder.java">Convert</a></li>
+</ul>
+</nav>
+<div class="content">
 <h2>2012 School District Snapshot</h2>
 
 <div id="radiobuttons" style="float:left; width:50%">
@@ -115,7 +134,7 @@ body {
 
 </div><!-- end charts -->
 
-
+</div>
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script>
 
@@ -323,3 +342,5 @@ function arcTween(a) {
   ga("send", "pageview");
 </script>
 <script async src="//www.google-analytics.com/analytics.js"></script>
+</body>
+</html>

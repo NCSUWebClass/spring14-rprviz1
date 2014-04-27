@@ -2,7 +2,10 @@
 <html class="ocks-org do-not-copy">
 <meta charset="utf-8">
 <title>Wake County FR School Lunch</title>
-<style>
+<style type="text/css">
+		<!--
+		@import url('../style.css');
+		-->
   #chart {
     margin-left: -40px;
     height: 506px;
@@ -63,7 +66,23 @@
 	  background-color:#C74538;
   }
 </style>
-
+<body>
+<nav role="navigation">
+<ul class="nav">
+   <li><a href="../index.html">About</a></li>
+  <li><a href="../data.html">Data</a></li>  
+  <li style="background-color:red"><a href="../visuals.html">Graph</a>
+    <ul>
+      <li><a href="../visual1/schools.html">Minority Population and Free and Reduced Lunch Percentage Over Time</a></li>
+      <li><a href="../snapshot/snapshot.html">Snapshot of a School District</a></li>
+	  <li><a href="../Needy%HTML/index.html">Needy Percentage Over Time by School</a></li>
+	  <li><a href="../school-line/index.html">Needy Percentage Over Time by Diversity</a></li>
+    </ul>
+  </li>
+  <li><a href="../jsonBuilder/jsonBuilder.java">Convert</a></li>
+</ul>
+</nav>
+<div class="content">
 
 
 <h1>Wake County Free and Reduced Lunch</h1>
@@ -179,26 +198,26 @@ Sort By:
     .attr("x", width)
     .text(2008);
 
-  var str = "schools.json";
+  var str = "./schools.json";
   draw();
   function updateDataA() {
-	  str = "schools.json";
+	  str = "./schools.json";
 	  draw();
   }
   function updateDataE() {
-	  str = "elem.json";
+	  str = "./elem.json";
 	  draw();
   }
   function updateDataM() {
-	  str = "middle.json";
+	  str = "./middle.json";
 	  draw();
   }
   function updateDataH() {
-	  str = "high.json";
+	  str = "./high.json";
 	  draw();
   }
   function updateDataO() {
-	  str = "other.json";
+	  str = "./other.json";
 	  draw();
   }
 	  
@@ -228,7 +247,7 @@ Sort By:
     // Add a title.
     dot.append("title")
       .text(function(d) {
-        return d.name + "\npopulation: " + d.population;
+        return d.name + "\npopulation: " + d.population + "\nF&R lunch: " + d.fr + "%";
       });
 
     // Add an overlay for the year label.
@@ -356,3 +375,6 @@ Sort By:
   ga("send", "pageview");
 </script>
 <script async src="//www.google-analytics.com/analytics.js"></script>
+</div>
+</body>
+</html>
