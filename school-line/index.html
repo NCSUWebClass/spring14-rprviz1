@@ -52,15 +52,13 @@
 <button value="2010-11" onclick="redraw(this)">2010-2011</button>
 <button value="2009-10" onclick="redraw(this)">2009-2010</button>
 <button value="2008-09" onclick="redraw(this)">2008-2009</button>
-<button value="2007-08" onclick="redraw(this)">2007-2008</button>
-<button value="2006-07" onclick="redraw(this)">2006-2007</button>
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
 <script>
 var datalocation = "../json/";
 
 var margin = {top: 20, right: 100, bottom: 100, left: 50},
-    width = 1650 - margin.left - margin.right,
+    width = 1600 - margin.left - margin.right,
     height = 650 - margin.top - margin.bottom;
 
 var x = d3.scale.ordinal()
@@ -70,7 +68,7 @@ var y = d3.scale.linear()
     .rangeRound([height, 0]);
 
 var color = d3.scale.ordinal()
-    .range(["#a05d56", "#d0743c", "#ff8c00"]);
+    .range(["#a05d5a", "#d4733d", "#ff8f00","#69c625","#a5a9f1"]);
 
 var xAxis = d3.svg.axis()
     .scale(x)
@@ -91,7 +89,7 @@ var tip = d3.tip()
   .attr('class', 'd3-tip')
   .offset([50, 0])
   .html(function(d) {
-    return "<div style='background:white; opacity: 0.8;'><strong style='color:black;'>Percent:</strong> <span style='color:red'>" + Math.floor((d.y1 - d.y0) * 100) + "</span><br>" + d.site + "</div>";
+    return "<div style='background:white; opacity: 0.8;'><strong style='color:black;'>Percent:</strong> <span style='color:red'>" + Math.floor((d.y1 - d.y0) * 100) + "</span><br>% Free and Reduced: " + d.needy + "<br>" + d.site + "</div>";
  });
  
  svg.call(tip);
@@ -105,26 +103,24 @@ var redraw = function(button) {
 	.append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 	
-	var newdatafile = button.value + "freereduced.json";
+	var newdatafile = "schoolinfo-" + button.value + ".json";
 	render(datalocation + newdatafile);
 }
 
 var render = function(filename) {
-	d3.json(filename, function(error, data) {
-	console.log(error);
-	  //color.domain(d3.keys(data[0]).filter(function(key) { return key !== "State"; }));
-	  color.domain(["Normal", "Reduced Applications", "Free Applications"]);
+	d3.json(filename, function(data) {
+	  color.domain(["White", "Black or African American", "Asian", "Hispanic or Latino", "Two or More Races"]);
 
 	  data.forEach(function(d) {
 		var y0 = 0;
-		d.Normal = d["ADM"] - d["Reduced Applications"] - d["Free Applications"];
-		d.ages = color.domain().map(function(name) { return {name: name, y0: y0, y1: y0 += +d[name], site: d["Site Name"]}; });
+		//d.Normal = d["ADM"] - d["Reduced Applications"] - d["Free Applications"];
+		d.ages = color.domain().map(function(name) { if (isNaN(d[name])) d[name] = 0; return {name: name, y0: y0, y1: y0 += +d[name], site: d["School Name"], needy: d["Percent F&R"]}; });
 		d.ages.forEach(function(d) { d.y0 /= y0; d.y1 /= y0; });
 	  });
 
 	  data.sort(function(a, b) { return b.ages[0].y1 - a.ages[0].y1; });
 
-	  x.domain(data.map(function(d) { return d["Site Name"]; }));
+	  x.domain(data.map(function(d) { return d["School Name"]; }));
 
 	  svg.append("g")
 		  .attr("class", "x axis")
@@ -132,10 +128,6 @@ var render = function(filename) {
 		  .call(xAxis)
 		  .selectAll("text")
 		  .style("display", "none");
-		   /* .style("text-anchor", "end")
-			.attr("transform", function(d) { return "rotate(-65)" })
-			.attr("dx", "-1em")
-			.attr("dy", "-0.3em"); */
 
 	  svg.append("g")
 		  .attr("class", "y axis")
@@ -145,7 +137,7 @@ var render = function(filename) {
 		  .data(data)
 		.enter().append("g")
 		  .attr("class", "lunch")
-		  .attr("transform", function(d) { return "translate(" + x(d["Site Name"]) + ",0)"; });
+		  .attr("transform", function(d) { return "translate(" + x(d["School Name"]) + ",0)"; });
 
 	  lunch.selectAll("rect")
 		  .data(function(d) { return d.ages; })
@@ -173,7 +165,7 @@ var render = function(filename) {
 	});
 }
 
-render(datalocation + "2012-13freereduced.json");
+render(datalocation + "schoolinfo-2012-13.json");
 </script>
 </div>
 </body>
