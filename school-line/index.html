@@ -1,13 +1,12 @@
 <!DOCTYPE html>
+<html>
+<head>
 <meta charset="utf-8">
 <style type="text/css">
 		<!--
 		@import url('../style.css');
 		-->
 
-body {
-  font: 10px sans-serif;
-}
 
 .axis path,
 .axis line {
@@ -30,6 +29,7 @@ body {
 }
 
 </style>
+</head>
 <body><nav role="navigation">
 <ul class="nav">
    <li><a href="../index.html">About</a></li>
@@ -59,7 +59,7 @@ body {
 <script>
 var datalocation = "../json/";
 
-var margin = {top: 20, right: 100, bottom: 100, left: 40},
+var margin = {top: 20, right: 100, bottom: 100, left: 50},
     width = 1650 - margin.left - margin.right,
     height = 650 - margin.top - margin.bottom;
 
@@ -81,7 +81,7 @@ var yAxis = d3.svg.axis()
     .orient("left")
     .tickFormat(d3.format(".0%"));
 
-var svg = d3.select("body").append("svg")
+var svg = d3.select("div.content").append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
 	.append("g")
