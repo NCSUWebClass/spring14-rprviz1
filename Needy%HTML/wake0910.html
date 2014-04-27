@@ -5,8 +5,11 @@
      <title>Wake County Schools - % Students in Need of Free/Reduced Lunch per School: 2009-2010</title>
      <meta http-equiv="X-UA-Compatible" content="IE=9">
   </head>
-  <style>
-	body {
+  <style type="text/css">
+		<!--
+		@import url('../style.css');
+		-->
+	.content {
 		font-family: Verdana, sans-serif;
 		font-size: 7px;
 	}
@@ -17,6 +20,19 @@
 	}
   </style>
   <body>
+  <nav role="navigation">
+<ul class="nav">
+   <li><a href="wake0607.html">2006-2007</a></li>
+	<li><a href="wake0708.html">2007-2008</a></li>
+	<li><a href="wake0809.html">2008-2009</a></li>
+	<li><a href="wake0910.html">2009-2010</a></li>
+	<li><a href="wake1011.html">2010-2011</a></li>
+	<li><a href="Wake1112.html">2011-2012</a></li>
+	<li><a href="Wake1213.html">2012-2013</a></li>
+	<li><a href="index.html">Home</a></li>
+</ul>
+</nav>
+<div class="content">
 	<p style="font-size: 24px">Wake County Schools - % Students in Need of Free/Reduced Lunch per School: 2009-2010</p>
     <div id="chart"></div>
     <script src="http://d3js.org/d3.v3.min.js"></script>
@@ -265,14 +281,6 @@ barsContainer.append("line")
 920,Wake County Schools,632,Zebulon Elementary,498,47,288,67.27,K    05,
 920,Wake County Schools,636,Zebulon Middle,557,59,303,64.99,06   08,</script>
     <script>renderChart();</script>
-	<p style="font-size: 18px">Other Years</p>
-	<a href="wake0607.html">2006-2007</a><br />
-	<a href="wake0708.html">2007-2008</a><br />
-	<a href="wake0809.html">2008-2009</a><br />
-	<a href="wake0910.html">2009-2010</a><br />
-	<a href="wake1011.html">2010-2011</a><br />
-	<a href="Wake1112.html">2011-2012</a><br />
-	<a href="Wake1213.html">2012-2013</a><br />
-	<a href="index.html">Home</a>
+	</div>
   </body>
 </html>
