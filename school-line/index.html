@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
-<style>
+<style type="text/css">
+		<!--
+		@import url('../style.css');
+		-->
 
 body {
   font: 10px sans-serif;
@@ -27,7 +30,22 @@ body {
 }
 
 </style>
-<body>
+<body><nav role="navigation">
+<ul class="nav">
+   <li><a href="../index.html">About</a></li>
+  <li><a href="../data.html">Data</a></li>  
+  <li style="background-color:red"><a href="../visuals.html">Graph</a>
+    <ul>
+      <li><a href="../visual1/schools.html">Minoirty Population and Free and Reduced Lunch Percentage Over Time</a></li>
+      <li><a href="../snapshot/snapshot.html">Snapshot of a School District</a></li>
+	  <li><a href="index.html">Needy Percentage Over Time by School</a></li>
+	  <li><a href="../school-line/index.html">Needy Percentage Over Time by Diversity</a></li>
+    </ul>
+  </li>
+  <li><a href="./jsonBuilder/jsonBuilder.java">Convert</a></li>
+</ul>
+</nav>
+<div class="content">
 <h2 style="font-family: Tahoma">Wake County Lunch Data Needy Percentages</h3>
 <button value="2012-13" onclick="redraw(this)">2012-2013</button>
 <button value="2011-12" onclick="redraw(this)">2011-2012</button>
@@ -157,3 +175,6 @@ var render = function(filename) {
 
 render(datalocation + "2012-13freereduced.json");
 </script>
+</div>
+</body>
+</html>
