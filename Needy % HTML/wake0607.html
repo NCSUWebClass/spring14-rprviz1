@@ -1,0 +1,267 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!-- Generated with d3-generator.com -->
+<html>
+  <head>
+     <title>Wake County Schools - % Students in Need of Free/Reduced Lunch per School: 2006-2007</title>
+     <meta http-equiv="X-UA-Compatible" content="IE=9">
+  </head>
+  <style>
+	body {
+		font-family: Verdana, sans-serif;
+		font-size: 7px;
+	}
+	
+	a {
+		font-family: Verdana, sans-serif;
+		font-size: 12px;
+	}
+  </style>
+  <body>
+	<p style="font-size: 24px">Wake County Schools - % Students in Need of Free/Reduced Lunch per School: 2006-2007</p>
+    <div id="chart"></div>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script>
+function renderChart() {
+
+var data = d3.csv.parse(d3.select('#csv').text());
+var valueLabelWidth = 40; // space reserved for value labels (right)
+var barHeight = 20; // height of one bar
+var barLabelWidth = 100; // space reserved for bar labels
+var barLabelPadding = 5; // padding between bar and bar labels (left)
+var gridLabelHeight = 18; // space reserved for gridline labels
+var gridChartOffset = 3; // space between start of grid and first bar
+var maxBarWidth = 420; // width of the bar with the max value
+
+// data aggregation
+var aggregatedData = d3.nest()
+  .key(function(d) { return d['siteNum']; })
+  .rollup(function(d) {
+    return {
+      'value': d3.sum(d, function(e) { return parseFloat(e['needy']); })
+    };
+  })
+  .entries(data);
+ 
+// accessor functions 
+var barLabel = function(d) { return d.key; };
+var barValue = function(d) { return d.values.value; };
+ 
+// scales
+var yScale = d3.scale.ordinal().domain(d3.range(0, aggregatedData.length)).rangeBands([0, aggregatedData.length * barHeight]);
+var y = function(d, i) { return yScale(i); };
+var yText = function(d, i) { return y(d, i) + yScale.rangeBand() / 2; };
+var x = d3.scale.linear().domain([0, d3.max(aggregatedData, barValue)]).range([0, maxBarWidth]);
+// svg container element
+var chart = d3.select('#chart').append("svg")
+  .attr('width', maxBarWidth + barLabelWidth + valueLabelWidth)
+  .attr('height', gridLabelHeight + gridChartOffset + aggregatedData.length * barHeight);
+// grid line labels
+var gridContainer = chart.append('g')
+  .attr('transform', 'translate(' + barLabelWidth + ',' + gridLabelHeight + ')'); 
+gridContainer.selectAll("text").data(x.ticks(10)).enter().append("text")
+  .attr("x", x)
+  .attr("dy", -3)
+  .attr("text-anchor", "middle")
+  .text(String);
+// vertical grid lines
+gridContainer.selectAll("line").data(x.ticks(10)).enter().append("line")
+  .attr("x1", x)
+  .attr("x2", x)
+  .attr("y1", 0)
+  .attr("y2", yScale.rangeExtent()[1] + gridChartOffset)
+  .style("stroke", "#ccc");
+// bar labels
+var labelsContainer = chart.append('g')
+  .attr('transform', 'translate(' + (barLabelWidth - barLabelPadding) + ',' + (gridLabelHeight + gridChartOffset) + ')'); 
+labelsContainer.selectAll('text').data(aggregatedData).enter().append('text')
+  .attr('y', yText)
+  .attr('stroke', 'none')
+  .attr('fill', 'black')
+  .attr("dy", ".35em") // vertical-align: middle
+  .attr('text-anchor', 'end')
+  .text(barLabel);
+// bars
+var barsContainer = chart.append('g')
+  .attr('transform', 'translate(' + barLabelWidth + ',' + (gridLabelHeight + gridChartOffset) + ')'); 
+barsContainer.selectAll("rect").data(aggregatedData).enter().append("rect")
+  .attr('y', y)
+  .attr('height', yScale.rangeBand())
+  .attr('width', function(d) { return x(barValue(d)); })
+  .attr('stroke', 'white')
+  .attr('fill', 'steelblue');
+// bar value labels
+barsContainer.selectAll("text").data(aggregatedData).enter().append("text")
+  .attr("x", function(d) { return x(barValue(d)); })
+  .attr("y", yText)
+  .attr("dx", 3) // padding-left
+  .attr("dy", ".35em") // vertical-align: middle
+  .attr("text-anchor", "start") // text-align: right
+  .attr("fill", "black")
+  .attr("stroke", "none")
+  .text(function(d) { return d3.round(barValue(d), 2); });
+// start line
+barsContainer.append("line")
+  .attr("y1", -gridChartOffset)
+  .attr("y2", yScale.rangeExtent()[1] + gridChartOffset)
+  .style("stroke", "#000");
+
+}
+    </script>
+    <script id="csv" type="text/csv">agreeNum,sponsorName,siteNum,siteName,ADM,reducedApp,freeApp,needy,grade
+920,Wake County Schools,302,River Bend Elementary,504,247,60,60.91,K  05,
+920,Wake County Schools,304,Adams Elementary,795,40,248,36.23,K  05,
+920,Wake County Schools,308,Apex Elementary,642,180,33,33.18,K  05,
+920,Wake County Schools,312,Apex Middle,1157,42,147,16.34,06  08,
+920,Wake County Schools,316,Apex High,2172,41,176,9.99,09  12,
+920,Wake County Schools,318,Athens Drive High,1835,82,469,30.03,09  12,
+920,Wake County Schools,320,Aversboro Elementary,608,61,305,60.20,K  05,
+920,Wake County Schools,324,Longview,89,4,19,25.84,06  12,
+920,Wake County Schools,326,Baileywick Road Elementary,606,23,193,35.64,K  05,
+920,Wake County Schools,327,Ballentine Elementary,757,36,171,27.34,K  05,
+920,Wake County Schools,328,Baucom Elementary,903,42,107,16.50,K  05,
+920,Wake County Schools,329,Bar Well Road Elementary,773,126,399,67.92,K  05,
+920,Wake County Schools,334,Brassfield Elementary,678,15,80,14.01,PK  05,
+920,Wake County Schools,336,Brentwood Elementary,521,65,368,83.11,K  05,
+920,Wake County Schools,340,Briarcliff Elementary,516,47,222,52.13,K  05,
+920,Wake County Schools,342,Brier Creek Elementary,515,31,127,30.68,K  05,
+920,Wake County Schools,344,Brooks Elementary,532,31,127,29.70,K  05,
+920,Wake County Schools,348,Needham Broughton High,2132,88,504,27.77,09  12,
+920,Wake County Schools,352,Bugg Elementary,457,44,181,49.23,K  05,
+920,Wake County Schools,356,Carnage Middle,1136,86,452,47.36,06  08,
+920,Wake County Schools,358,Carpenter Elementary,519,71,256,63.01,K  05,
+920,Wake County Schools,360,Carroll Middle,637,71,256,51.33,06  08,
+920,Wake County Schools,362,Carver Elementary,599,85,343,71.45,PK  05,
+920,Wake County Schools,364,Cary Elementary,634,42,252,46.37,K  05,
+920,Wake County Schools,368,Cary High,1994,106,389,24.82,09  12,
+920,Wake County Schools,369,Cedar Fork Elementary,623,32,70,16.37,K  05,
+920,Wake County Schools,370,Centennial Campus Middle,586,39,173,36.18,06  08,
+920,Wake County Schools,376,Combs Elementary,795,62,255,39.87,K  05,
+920,Wake County Schools,380,Conn Elementary,549,29,264,53.37,K  05,
+920,Wake County Schools,384,Creech Road Elementary,527,49,316,69.26,K  05,
+920,Wake County Schools,388,Daniels Middle,1015,53,299,34.68,06  08,
+920,Wake County Schools,390,Davis Drive Elementary,981,21,62,8.46,K  05,
+920,Wake County Schools,391,Davis Drive Middle,1091,25,149,15.95,06  08,
+920,Wake County Schools,393,Dillard Drive Elementary,698,54,249,43.41,K  05,
+920,Wake County Schools,394,Dillard Drive Middle,1002,65,388,45.21,06  08,
+920,Wake County Schools,396,Douglas Elementary,470,31,146,37.66,K  05,
+920,Wake County Schools,398,Durant Road Elementary,1024,65,297,35.35,K  05,
+920,Wake County Schools,399,Durant Road Middle,1119,67,315,34.14,06  08,
+920,Wake County Schools,400,Reedy Creek Middle,789,73,275,44.11,06  08,
+920,Wake County Schools,404,East Garner Middle,1040,141,470,58.75,06  08,
+920,Wake County Schools,408,East Millbrook Middle,1057,120,403,49.48,06  08,
+920,Wake County Schools,410,East Wake Middle,949,122,455,60.80,06  08,
+920,Wake County Schools,411,East Wake High,837,138,549,82.08,09  12,
+920,Wake County Schools,412,William G Enloe High,2454,104,521,25.47,09  12,
+920,Wake County Schools,413,Forestville Road Elementary,571,61,239,52.54,K  05,
+920,Wake County Schools,414,Farmington Woods Elementary,844,30,233,31.16,K  05,
+920,Wake County Schools,415,Fox Road Elementary,786,81,401,61.32,K  05,
+920,Wake County Schools,416,Fuller Elementary,582,37,177,36.77,K  05,
+920,Wake County Schools,417,Forest Pines Elementary,536,33,151,34.33,K  05,
+920,Wake County Schools,420,Fuquay-Varina Elementary,872,74,269,39.33,K  05,
+920,Wake County Schools,424,Fuquay-Varina Middle,997,92,234,32.70,06  08,
+920,Wake County Schools,428,Fuquay-Varina High,1663,95,275,22.25,09  12,
+920,Wake County Schools,436,Garner High,2007,164,701,43.10,09  12,
+920,Wake County Schools,438,River Oaks Middle,31,0,0,0.00,06  08,*
+920,Wake County Schools,439,Green Hope Elementary,857,19,57,8.87,K  05,
+920,Wake County Schools,440,Green Elementary,583,35,155,32.59,K  05,
+920,Wake County Schools,441,Green Hope High,2053,34,121,7.55,09  12,
+920,Wake County Schools,442,Hilburn Drive Elementary,783,33,205,30.40,K  05,
+920,Wake County Schools,443,Highcroft Elementary,867,11,31,4.84,K  05,
+920,Wake County Schools,444,Heritage Middle,1252,84,243,26.12,06  08,
+920,Wake County Schools,446,Hodge Road Elementary,700,91,402,70.43,K  05,
+920,Wake County Schools,447,Holly Springs Elementary,839,51,133,21.93,K  05,
+920,Wake County Schools,448,Hunter Elementary,777,179,206,49.55,K  05,
+920,Wake County Schools,449,Holly Ridge Elementary,723,54,182,32.64,K  05,
+920,Wake County Schools,450,Holly Ridge Middle,1299,82,238,24.63,06  08,
+920,Wake County Schools,451,Harris Creek Elementary,853,95,297,45.96,K  05,
+920,Wake County Schools,452,Jeffreys Grove Elementary,570,27,227,44.56,K  05,
+920,Wake County Schools,453,Jones Dairy Elementary,973,49,141,19.53,K  05,
+920,Wake County Schools,454,Heritage Elementary,966,60,271,34.27,K  05,
+920,Wake County Schools,455,Holly Springs High,800,71,291,45.25,09  12,
+920,Wake County Schools,456,Joyner Elementary,519,35,211,47.40,K  05,
+920,Wake County Schools,457,Holly Grove Elementary,476,16,64,16.81,K  05,
+920,Wake County Schools,460,Kingswood Elementary,405,45,131,43.46,K  05,
+920,Wake County Schools,464,Knightdale Elementary,682,100,332,63.34,K  05,
+920,Wake County Schools,466,Knightdale High,1576,162,483,40.93,09  12,
+920,Wake County Schools,468,Lacy Elementary,696,22,159,26.01,K  05,
+920,Wake County Schools,469,Leesville Road Elementary,911,17,81,10.76,K  05,
+920,Wake County Schools,470,Lead Mine Elementary,583,48,190,40.82,K  05,
+920,Wake County Schools,471,Leesville Road Middle,1267,62,304,28.89,06  08,
+920,Wake County Schools,472,Ligon Middle,1075,44,274,29.58,06  08,
+920,Wake County Schools,473,Leesville Road High,2300,63,330,17.09,09  12,
+920,Wake County Schools,476,Lincoln Heights Elementary,637,42,149,29.98,K  05,
+920,Wake County Schools,480,Lockhart Elementary,765,108,284,51.24,K  05,
+920,Wake County Schools,484,Lufkin Road Middle,1058,37,142,16.92,06  08,
+920,Wake County Schools,488,Lynn Road Elementary,539,44,237,52.13,K  05,
+920,Wake County Schools,492,Martin Middle,1017,38,208,24.19,06  08,
+920,Wake County Schools,494,Middle Creek Elementary,994,49,239,28.97,K  05,
+920,Wake County Schools,495,Middle Creek High,1850,62,374,23.57,09  12,
+920,Wake County Schools,496,Millbrook Elementary,747,91,399,65.60,K   05,
+920,Wake County Schools,500,Millbrook High,2144,133,657,36.85,09  12,
+920,Wake County Schools,504,Morrisville Elementary,731,16,109,17.10,K  05,
+920,Wake County Schools,506,Moore Square Museum Magnet Mid,518,32,215,47.68,06  08,
+920,Wake County Schools,508,Mount Vernon,86,2,12,16.28,06  08,
+920,Wake County Schools,512,North Garner Middle,862,116,452,65.89,06  08,
+920,Wake County Schools,516,North Ridge Elementary,831,66,274,40.91,K  05,
+920,Wake County Schools,520,Northwoods Elementary,568,57,141,34.86,K  05,
+920,Wake County Schools,522,Oak Grove Elementary,859,17,96,13.15,K  05,
+920,Wake County Schools,523,Olive Chapel Elementary,933,21,50,7.61,K  05,
+920,Wake County Schools,524,Olds Elementary,338,9,76,25.15,K  05,
+920,Wake County Schools,525,Partnership Elementary,313,17,85,32.59,K  05,
+920,Wake County Schools,526,Panther Creek High,886,33,86,13.43,09  12,
+920,Wake County Schools,528,Phillips High,145,19,92,76.55,09  12,
+920,Wake County Schools,530,Penny Road Elementary,723,28,179,28.63,K  05,
+920,Wake County Schools,531,Pleasant Union Elementary,691,21,84,15.20,K  05,
+920,Wake County Schools,532,Poe Elementary,370,27,176,54.86,PK  05,
+920,Wake County Schools,536,Powell Elementary,478,46,241,60.04,K  05,
+920,Wake County Schools,540,Rand Road Elementary,743,82,206,38.76,K  05,
+920,Wake County Schools,542,Reedy Creek Elementary,588,43,203,41.84,K  05,
+920,Wake County Schools,544,Rolesville Elementary,617,26,123,24.15,PK  05,
+920,Wake County Schools,548,Root Elementary,459,20,138,34.42,K  05,
+920,Wake County Schools,550,Salem Elementary,768,16,111,16.54,K  05,
+920,Wake County Schools,551,Salem Middle,1049,27,53,7.63,06  08,
+920,Wake County Schools,552,Sanderson High,1857,103,550,35.16,09  12,
+920,Wake County Schools,560,Smith Elementary,483,74,307,78.88,K  05,
+920,Wake County Schools,562,Southeast Raleigh High,1903,145,558,36.94,09  12,
+920,Wake County Schools,564,Stough Elementary,515,37,210,47.96,K  05,
+920,Wake County Schools,568,Swift Creek Elementary,536,30,199,42.72,K  05,
+920,Wake County Schools,570,Timber Drive Elementary,927,60,239,32.25,K  05,
+920,Wake County Schools,571,Turner Creek Elementary,808,23,68,11.26,K  05,
+920,Wake County Schools,572,Underwood Elementary,488,20,160,36.89,K  05,
+920,Wake County Schools,576,Vance Elementary,460,40,114,33.48,K  05,
+920,Wake County Schools,580,Vandora Springs Elementary,592,52,294,58.45,K  05,
+920,Wake County Schools,583,Wake Early College Health,96,0,0,0.00,09  09,*
+920,Wake County Schools,584,Wake Forest Elementary,717,27,85,15.62,K  05,
+920,Wake County Schools,588,Wake Forest-Rolesville High,1844,69,247,17.14,09  12,
+920,Wake County Schools,592,Wake Forest-Rolesville Mid,1142,83,313,34.68,06  08,
+920,Wake County Schools,593,Wakefield Elementary,1142,42,200,21.19,K  05,
+920,Wake County Schools,594,Wakefield Middle,1287,65,171,18.34,06  08,
+920,Wake County Schools,595,Wakefield High,2323,98,368,20.06,09  12,
+920,Wake County Schools,596,Washington Elementary,577,22,201,38.65,K  05,
+920,Wake County Schools,597,Wakelon Elementary,375,42,234,73.60,K  05,
+920,Wake County Schools,598,Weatherstone Elementary,837,29,184,25.45,K  05,
+920,Wake County Schools,600,Wendell Elementary,567,55,242,52.38,K  05,
+920,Wake County Schools,604,West Cary Middle,1112,52,227,25.09,06  08,
+920,Wake County Schools,606,West Lake Elementary,1079,52,240,27.06,K  05,
+920,Wake County Schools,607,West Lake Middle,1329,52,193,18.43,06  08,
+920,Wake County Schools,608,West Millbrook Middle,1081,76,376,41.81,06  08,
+920,Wake County Schools,616,Wilburn Elementary,995,122,550,67.54,K  05,
+920,Wake County Schools,618,Wildwood Forest Elementary,873,71,272,39.29,K  05,
+920,Wake County Schools,620,Wiley Elementary,404,20,100,29.70,K  05,
+920,Wake County Schools,624,Willow Springs Elementary,908,258,262,57.27,K  05,
+920,Wake County Schools,626,Yates Mill Elementary,621,45,240,45.89,K  05,
+920,Wake County Schools,628,York Elementary,589,61,299,61.12,K  05,
+920,Wake County Schools,632,Zebulon Elementary,492,49,278,66.46,K  05,
+920,Wake County Schools,636,Zebulon Middle,1002,117,452,56.79,06  08,
+920,Wake County Schools,700,East Wake Health Sci,367,0,0,0.00,09 12,*
+920,Wake County Schools,701,East Wake Integ Tech,234,0,0,0.00,09  11,*</script>
+    <script>renderChart();</script>
+	<p style="font-size: 18px">Other Years</p>
+	<a href="wake0607.html">2007-2008</a><br />
+	<a href="wake0708.html">2008-2009</a><br />
+	<a href="wake0910.html">2009-2010</a><br />
+	<a href="wake1011.html">2010-2011</a><br />
+	<a href="wake1112.html">2011-2012</a><br />
+	<a href="wake1213.html">2012-2013</a>
+  </body>
+</html>
