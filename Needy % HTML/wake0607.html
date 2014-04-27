@@ -19,7 +19,7 @@
   <body>
 	<p style="font-size: 24px">Wake County Schools - % Students in Need of Free/Reduced Lunch per School: 2006-2007</p>
     <div id="chart"></div>
-    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script src="http://d3js.org/d3.v2.min.js"></script>
     <script>
 function renderChart() {
 
@@ -34,7 +34,7 @@ var maxBarWidth = 420; // width of the bar with the max value
 
 // data aggregation
 var aggregatedData = d3.nest()
-  .key(function(d) { return d['siteNum']; })
+  .key(function(d) { return d['siteName']; })
   .rollup(function(d) {
     return {
       'value': d3.sum(d, function(e) { return parseFloat(e['needy']); })
